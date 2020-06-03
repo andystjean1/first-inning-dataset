@@ -42,7 +42,7 @@ class PlayerScraper(object):
     # checks if the gamelog is in the cache first
     def scrape_batter_gamelog(self, player_id:str):
         """
-        scrape shte batting gamelog for a given batter. will check for the gamelog
+        scrapes the batting gamelog for a given batter. will check for the gamelog
         is already in the cache.
 
         Parameters
@@ -50,7 +50,7 @@ class PlayerScraper(object):
         player_id : str
             id of player for batting log to be scraped
         """
-        try:3
+        try:
             #check to see if the gamelog is in the cache
             gamelog = self.cache[player_id]
             print("found the bating gamelog in the cache...")
@@ -219,7 +219,8 @@ class PlayerScraper(object):
             self.cache[player_id] = gamelog
 
 ################################################################################
-# SCRAPING FORMATING HELPERS ##################################################
+# SCRAPING FORMATING HELPERS ###################################################
+
 #convert the soup object to a players gamelog dataframe
 def convert_gamelog_to_dataframe(url, table_id):
     response = requests.get(url)

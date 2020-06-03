@@ -6,15 +6,51 @@ import pandas as pd
 MONTH_DICT = {"Mar":'03',"Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08", "Sep":"09", "Oct":"10", "Nov":"11"}
 
 class PlayerScraper(object):
+    """
+        Class used to scrape player data from baseball-reference.com
+        ...
+        Attributes
+        ----------
+        cahce : Dict[str, DataFrame]
+
+        Methods
+        -------
+        scrape_batter_gamelog(player_id)
+            scrapes the batting log for a player from baseball-reference.com
+
+        scrape_pitcher_gamelog(player_id)
+            scrapes the pitching log for a pitcher from baseball-reference.com
+
+        get_batting_stats(player_id, game_date)
+            calculates the players batting stats for the a given game
+
+        get_pitching_stats(player_id, game_date)
+            calculates the pitching stats for a pitcher given a game
+
+        update_cache(player_id, gamelog)
+            update the cache with the gamelog and player id
+    """
     def __init__(self):
+        """
+        Initializes the cache
+        """
         self.cache = {}
 
 ################################################################################
 ### SCRPAING FUNCTION #########################################################
     # will scrape a batters gamelog for the 2019 season
     # checks if the gamelog is in the cache first
-    def scrape_batter_gamelog(self, player_id):
-        try:
+    def scrape_batter_gamelog(self, player_id:str):
+        """
+        scrape shte batting gamelog for a given batter. will check for the gamelog
+        is already in the cache.
+
+        Parameters
+        ---------
+        player_id : str
+            id of player for batting log to be scraped
+        """
+        try:3
             #check to see if the gamelog is in the cache
             gamelog = self.cache[player_id]
             print("found the bating gamelog in the cache...")
@@ -36,7 +72,15 @@ class PlayerScraper(object):
 
     # will scrape a pitcher gamelog for 2019 season
     # checks if the gamelog is in cache
-    def scrape_pitcher_gamelog(self, player_id):
+    def scrape_pitcher_gamelog(self, player_id:str):
+        """
+        scrapes the pitching gamelog for a given pitcher.  Will check for the gamelog is already in the cache
+
+        Parameters
+        ---------
+        player_id : str
+            id of player for pitching log to be scraped
+        """
         try:
             gamelog = self.cache[player_id]
             print("found the pitching gameling in the cache...")
@@ -58,6 +102,22 @@ class PlayerScraper(object):
 ### GET PLAYER STATS FUNCTIONS #################################################
     #get the batting stats for
     def get_batting_stats(self, player_id, game_date):
+        """
+        calculates the batting stats for a batter for a given game record
+
+        Parameters
+        ----------
+        player_id : str
+            id of player for batting stats
+
+        game_date : str
+            a string witht data code for the game
+
+        Returns
+        ----------
+        stats: Dict[str, str]
+            a dictinary with the stat as the key and the statistic as the value
+        """
         print("getting batting stats for ", player_id)
 
         gamelog = self.scrape_batter_gamelog(player_id)
@@ -75,6 +135,22 @@ class PlayerScraper(object):
 
     #get the pitching stats for the palyer_id
     def get_pitching_stats(self, player_id, game_date):
+        """
+        calculates the pitching stats for the pitcher for a given game
+
+        Parameters
+        ----------
+        player_id : str
+            id of player for pitching stats
+
+        game_date : str
+            a string with data code for the game
+
+        Returns
+        ----------
+        stats: Dict[str, str]
+            a dictinary with the stat as the key and the statistic as the value
+        """
         print("getting pitching stats for ", player_id)
 
         gamelog = self.scrape_pitcher_gamelog(player_id)
@@ -122,6 +198,16 @@ class PlayerScraper(object):
     # add a new gamelog to the cache
     # manage the size of the cache
     def update_cache(self, player_id, gamelog):
+        """
+         adds a value to the cache and removes a different value
+
+         Parameters
+         -----------
+         player_id : str
+            the id of the player
+        gamelog : DataFrame
+            a dataframe containing the batting/pitching gamelog of a player
+        """
         print("updating the cache")
 
         if(len(self.cache) > 30): #the cache is too big and we need to remove an item

@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 
 class EventGame(object):
+    """
+    """
     def __init__(self, id, info, events, home_lineup, away_lineup, ps):
         self.id = id.strip()
         self.info = info
